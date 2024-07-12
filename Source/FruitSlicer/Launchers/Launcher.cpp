@@ -4,6 +4,8 @@
 #include "Launcher.h"
 #include "TimerManager.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 ALauncher::ALauncher()
@@ -31,6 +33,15 @@ void ALauncher::LaunchActor()
 			GetTransform(),
 			SpawnParams
 		);
+
+		if (LaunchSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(
+				GetWorld(),
+				LaunchSound,
+				GetActorLocation()
+			);
+		}
 
 		StartTimer();
 	}

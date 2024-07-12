@@ -26,4 +26,7 @@ private:
 	virtual void StartTimer();
 	FTimerHandle LaunchTimer;
 
+	UPROPERTY(EditAnywhere, Category = "Properties")
+	class USoundCue* LaunchSound;
+
 };
