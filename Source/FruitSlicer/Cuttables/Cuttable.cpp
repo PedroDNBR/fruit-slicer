@@ -48,11 +48,22 @@ void ACuttable::BeginPlay()
 {
 	Super::BeginPlay();
 	Mesh->OnComponentHit.AddDynamic(this, &ACuttable::OnHit);
+	Mesh->OnComponentBeginOverlap.AddDynamic(this, &ACuttable::BeginOverlap);
 }
 
 void ACuttable::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor != nullptr) {
+	OnCollide(OtherActor);
+}
+
+void ACuttable::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	OnCollide(OtherActor);
+}
+
+void ACuttable::OnCollide(AActor* OtherActor)
+{
+if (OtherActor != nullptr) {
 		AWeapon* Weapon = Cast<AWeapon>(OtherActor);
 		AProjectile* Projectile = Cast<AProjectile>(OtherActor);
 		if ((Weapon && Weapon->bCanCut) || Projectile)
@@ -77,11 +88,13 @@ void ACuttable::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimiti
 				{
 					UGameplayStatics::PlaySoundAtLocation(this, CutSound, GetActorLocation());
 				}
-			}			
+			}
 			Destroy();
 		}
 	}
 }
+
+
 
 // Called every frame
 void ACuttable::Tick(float DeltaTime)

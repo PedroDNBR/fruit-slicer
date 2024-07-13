@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties", BlueprintReadWrite)
 	class UWeaponArtComponent* WeaponArtComponent;
 
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties", BlueprintReadWrite)
+	int32 MassScale = 3.f;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
 	class USkeletalMeshComponent* SkeletalMesh;

@@ -19,16 +19,18 @@ void UWeaponArtComponent::CastSlashSpell()
 {
 	StartBaseSlashPosition = Weapon->GetActorLocation();
 	StartTipSlashPosition = Weapon->GetMesh()->GetSocketLocation(FName("trailEnd"));
+	StartSlashRotation = Weapon->GetActorRotation();
 	UWorld* World = GetWorld();
-	World->GetTimerManager().SetTimer(
-		SlashSpellTimer,
-		this,
-		&UWeaponArtComponent::LaunchSlashSpell,
-		.5f
-	);
+	if (World)
+	{
+		World->GetTimerManager().SetTimer(
+			SlashSpellTimer,
+			this,
+			&UWeaponArtComponent::LaunchSlashSpell,
+			CastTime
+		);
+	}
 }
-
-
 
 void UWeaponArtComponent::LaunchSlashSpell()
 {
@@ -39,9 +41,14 @@ void UWeaponArtComponent::LaunchSlashSpell()
 		EndBaseSlashPosition = Weapon->GetActorLocation();
 		EndTipSlashPosition = Weapon->GetMesh()->GetSocketLocation(FName("trailEnd"));
 
-		FVector StartMiddleBaseSlashPosition = FMath::Lerp(StartBaseSlashPosition, EndBaseSlashPosition, 0.5f);
-		FVector StartMiddleTipSlashPosition = FMath::Lerp(StartTipSlashPosition, EndTipSlashPosition, 0.5f);
+		EndSlashRotation = Weapon->GetActorRotation();
 
+		const float LerpAlpha = 0.5f;
+
+		FVector StartMiddleBaseSlashPosition = FMath::Lerp(StartBaseSlashPosition, EndBaseSlashPosition, LerpAlpha);
+		FVector StartMiddleTipSlashPosition = FMath::Lerp(StartTipSlashPosition, EndTipSlashPosition, LerpAlpha);
+
+		FQuat MiddleSlashRotation = FQuat::Slerp(StartSlashRotation.Quaternion(), EndSlashRotation.Quaternion(), LerpAlpha);
 
 		FActorSpawnParameters SpawnParams;
 		AActor* SpawnedProjectile = nullptr;
@@ -51,7 +58,7 @@ void UWeaponArtComponent::LaunchSlashSpell()
 		SpawnedProjectile = World->SpawnActor<AActor>(
 			Projectile,
 			StartMiddleBaseSlashPosition,
-			Weapon->GetActorRotation() + FRotator(90.f,0.f,0.f),
+			MiddleSlashRotation.Rotator() + FRotator(90.f, 0.f, 0.f),
 			SpawnParams
 		);
 

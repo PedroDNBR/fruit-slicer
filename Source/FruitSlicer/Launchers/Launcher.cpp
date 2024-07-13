@@ -53,7 +53,7 @@ void ALauncher::StartTimer()
 		LaunchTimer,
 		this,
 		&ALauncher::LaunchActor,
-		UKismetMathLibrary::RandomFloatInRange(1.f, 5.f)
+		UKismetMathLibrary::RandomFloatInRange(MinLauncherDelay, MaxLauncherDelay)
 	);
 }
 

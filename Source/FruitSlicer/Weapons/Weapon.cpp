@@ -23,7 +23,7 @@ AWeapon::AWeapon()
 	SkeletalMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	SkeletalMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	SkeletalMesh->SetSimulatePhysics(true);
-	SkeletalMesh->SetAllMassScale(3.f);
+	SkeletalMesh->SetAllMassScale(MassScale);
 	SkeletalMesh->SetNotifyRigidBodyCollision(true);
 	SkeletalMesh->SetGenerateOverlapEvents(false);
 

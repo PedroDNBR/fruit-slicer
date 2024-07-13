@@ -22,8 +22,23 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION()
-	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	virtual void OnHit(UPrimitiveComponent* HitComp, 
+		AActor* OtherActor, 
+		UPrimitiveComponent* OtherComp, 
+		FVector NormalImpulse, 
+		const FHitResult& Hit
+	);
+
+	void OnCollide(AActor* OtherActor);
 	
+	UFUNCTION()
+	void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult);
+
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 

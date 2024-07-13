@@ -12,21 +12,28 @@ class FRUITSLICER_API ALauncher : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ALauncher();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:
 	UPROPERTY(EditAnywhere, Category = "Properties")
 	TSubclassOf<AActor> Actor;
+
+	UPROPERTY(EditAnywhere, Category = "Properties")
+	class USoundCue* LaunchSound;
+
+	UPROPERTY(EditAnywhere, Category = "Properties")
+	int32 MinLauncherDelay = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "Properties")
+	int32 MaxLauncherDelay = 5.f;
+
+private:
 	virtual void LaunchActor();
 	virtual void StartTimer();
 	FTimerHandle LaunchTimer;
 
-	UPROPERTY(EditAnywhere, Category = "Properties")
-	class USoundCue* LaunchSound;
+
 
 };

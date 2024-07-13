@@ -75,7 +75,7 @@ void AProjectile::BeginPlay()
 		);
 	}
 
-	if (HasAuthority())
+	if (HasAuthority())	
 	{
 		CollisionBox->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 	}
@@ -84,6 +84,7 @@ void AProjectile::BeginPlay()
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	if (!bDestroyOnImpact) return;
+	if (HitComp->GetCollisionObjectType() != ECollisionChannel::ECC_WorldStatic) return;
 	if (OtherActor != nullptr)
 	{
 		AProjectile* Projectile = Cast<AProjectile>(OtherActor);

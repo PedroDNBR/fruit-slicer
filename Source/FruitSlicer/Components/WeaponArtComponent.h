@@ -34,6 +34,9 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void CastSlashSpell();
 
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	float CastTime = .5f;
+
 	void LaunchSlashSpell();
 
 	FTimerHandle SlashSpellTimer;
@@ -43,6 +46,9 @@ private:
 
 	FVector StartTipSlashPosition;
 	FVector EndTipSlashPosition;
+
+	FRotator StartSlashRotation;
+	FRotator EndSlashRotation;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Ammo")
 	TSubclassOf<AActor> Projectile;
